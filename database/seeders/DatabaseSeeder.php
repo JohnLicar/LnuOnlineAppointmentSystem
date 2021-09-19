@@ -13,9 +13,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(DepartmentSeeder::class);
         $this->call(LaratrustSeeder::class);
         $this->call(UserSeeder::class);
+        $this->call(DepartmentSeeder::class);
         $this->call(CollegeSeeder::class);
         $this->call(CourseSeeder::class);
         // \App\Models\User::factory(10)->create();

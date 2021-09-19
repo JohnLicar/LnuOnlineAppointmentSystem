@@ -16,12 +16,11 @@ class CreateAppointmentsTable extends Migration
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
             $table->string("queuing_number");
-            $table->foreignId("service_id")->constrained('services');;
+            $table->foreignId("department_id")->constrained('departments');;
             $table->date('scheduled_date');
             $table->string("first_name");
             $table->string("middle_name");
             $table->string("last_name");
-            $table->foreignId('course_id')->constrained('courses');
             $table->string('email');
             $table->string('contact_number');
             $table->timestamps();

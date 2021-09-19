@@ -27,8 +27,7 @@ class VicePresController extends Controller
      */
     public function create()
     {
-        $departments = Department::where('hasVicePresident', false)->get();
-        return view('users.admin.vice-pres.create', compact('departments'));
+        return view('users.admin.vice-pres.create');
     }
 
     /**
@@ -41,7 +40,6 @@ class VicePresController extends Controller
     {
         $VicePresident = User::create($request->validated());
         $VicePresident->attachRole('Vice_President');
-        Department::where('id', $request->department_id)->update(['hasVicePresident' => true]);
 
         if ($request->hasFile('avatar')) {
             $avatar =  $VicePresident->id . '-' . $request->first_name . '-' . $request->last_name . '.' . $request->avatar->getClientOriginalExtension();
@@ -71,8 +69,7 @@ class VicePresController extends Controller
      */
     public function edit(User $vice_pre)
     {
-        $departments = Department::get();
-        return view('users.admin.vice-pres.edit', compact('vice_pre', 'departments'));
+        return view('users.admin.vice-pres.edit', compact('vice_pre'));
     }
 
     /**
@@ -85,10 +82,7 @@ class VicePresController extends Controller
     public function update(UserRequest $request, User $vice_pre)
     {
         if ($vice_pre->avatar)  unlink("images/profile/" . $vice_pre->avatar);
-
-        $vice_pre->department()->update(['hasVicePresident' => false]);
         $vice_pre->update($request->validated());
-        $vice_pre->department()->update(['hasVicePresident' => true]);
 
         if ($request->hasFile('avatar')) {
             $avatar =  $vice_pre->id . '-' . $request->first_name . '-' . $request->last_name . '.' . $request->avatar->getClientOriginalExtension();
@@ -107,7 +101,6 @@ class VicePresController extends Controller
     public function destroy(User $vice_pre)
     {
         $vice_pre->delete();
-        Department::where('id', $vice_pre->department_id)->update(['hasVicePresident' => false]);
         File::delete('images/profile/' . $vice_pre->avatar);
         return redirect()->route('vice-pres.index')->with('message', 'Teacher Profile Deleted successfully');
     }

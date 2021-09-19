@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
 use App\Models\Department;
+use App\Models\Staff;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -39,7 +40,14 @@ class StaffController extends Controller
     public function store(UserRequest $request)
     {
         $staffs = User::create($request->validated());
+
+        Staff::create([
+            'user_id' => $staffs->id,
+            'department_id' => auth()->user()->chairman->id,
+        ]);
+
         $staffs->attachRole('Staff');
+
         if ($request->hasFile('avatar')) {
             $avatar =  $staffs->id . '-' . $request->first_name . '-' . $request->last_name . '.' . $request->avatar->getClientOriginalExtension();
             $request->avatar->move(public_path('images/profile'), $avatar);

@@ -16,8 +16,8 @@
         <div class="grid md:grid-cols-3 sm:grid-cols-1 gap-2">
 
             <div class="col-span-3 mt-2">
-                <x-label for="service_id" :value="__('Service')" />
-                <select id="service_id" name="service_id" :value="old('service_id')" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required autofocus>
+                <x-label for="department_id" :value="__('Department you wish to have transaction')" />
+                <select id="department_id" name="department_id" :value="old('department_id')" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required autofocus>
                     <option value="" disabled selected>Select your Service you want</option>
                     @foreach ($departments as $department)
                     <option value="{{ $department->id }}">{{ $department->description }}</option>

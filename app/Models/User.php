@@ -26,7 +26,6 @@ class User extends Authenticatable
         'last_name',
         'email',
         'contact_number',
-        'department_id',
         'password',
         'avatar',
     ];
@@ -50,9 +49,29 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function department()
+    public function vice_pres()
     {
-        return $this->belongsTo(Department::class, 'department_id');
+        return $this->hasOne(Department::class, 'vp_id');
+    }
+    public function chairman()
+    {
+        return $this->hasOne(Department::class, 'chairman_id');
+    }
+    public function department_staff()
+    {
+        return $this->hasOne(
+            Staff::class
+        );
+    }
+
+
+    public function getFullNameAttribute()
+    {
+        return sprintf(
+            '%s %s',
+            $this->first_name,
+            $this->last_name
+        );
     }
 
 
@@ -61,10 +80,7 @@ class User extends Authenticatable
         return empty($search) ? static::query()
             : static::query()->where('first_name', 'like', '%' . $search . '%')
             ->OrWhere('last_name', 'like', '%' . $search . '%')
-            ->OrWhere('email', 'like', '%' . $search . '%')
-            ->orWhereHas('department', function ($query) use ($search) {
-                $query->where('description', 'LIKE', '%' . $search . '%');
-            });
+            ->OrWhere('email', 'like', '%' . $search . '%');
     }
 
     protected static function booted()

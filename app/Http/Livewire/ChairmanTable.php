@@ -16,13 +16,12 @@ class ChairmanTable extends Component
     {
 
         $chairmans = User::search($this->search)
-            ->with('department')
-            ->where('department_id', auth()->user()->department_id)
+            ->with('chairman')
             ->whereRoleIs('Department_Head')
             ->orderByDesc('id')
-            ->Paginate(5);
+            ->Paginate(3);
 
-        // dd($chairmans);
+        // dd($chairmans[0]->chairman);
         return view('livewire.chairman-table', compact('chairmans'));
     }
 

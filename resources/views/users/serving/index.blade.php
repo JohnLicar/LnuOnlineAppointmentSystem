@@ -17,6 +17,7 @@
                     <h1>gg</h1>
                     <!-- component -->
                    @livewire('serving')
+
                 </div>
             </div>
         </div>

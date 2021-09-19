@@ -9,14 +9,12 @@ use Livewire\WithPagination;
 class Department extends Component
 {
     use WithPagination;
+    public $search = '';
+
     public function render()
     {
 
-        $departments = ModelsDepartment::with([
-            'vice_pres' => function ($query) {
-                $query->whereRoleIs('Vice_President')->orWhereRoleIs('Department_Head')->get();
-            },
-        ])->Paginate(3);
+        $departments = ModelsDepartment::search($this->search)->with(['vice_pres', 'chairman'])->Paginate(3);
         // dd($departments);
         return view('livewire.department', compact('departments'));
     }

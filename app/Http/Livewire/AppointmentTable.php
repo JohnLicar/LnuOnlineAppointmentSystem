@@ -3,25 +3,26 @@
 namespace App\Http\Livewire;
 
 use App\Models\Appointment;
-use App\Models\Department;
-use App\Models\Service;
+use App\Models\Serving;
 use Carbon\Carbon;
 use Livewire\Component;
 
 class AppointmentTable extends Component
 {
+
     public function render()
     {
-
-        $services =  Service::select('id')->where('department_id', auth()->user()->department_id)
-            ->get();
-
-        $appointments = Appointment::with(['course', 'service'])
+        $appointments = Appointment::with('department')
             ->where('scheduled_date', Carbon::now()->toDateString())
-            ->whereIn('service_id', $services)
+            ->where('department_id', auth()->user()->department_staff->department_id)
             ->get();
 
-        // dd($appointments);
         return view('livewire.appointment-table', compact('appointments'));
+    }
+
+    public function callQeueu($appointment_id)
+    {
+        Serving::create(['appointment_id' => $appointment_id]);
+        $this->emit('updateAppointments');
     }
 }

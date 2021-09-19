@@ -26,8 +26,7 @@ class ChairmanController extends Controller
      */
     public function create()
     {
-        $departments = Department::where('hasChairman', false)->get();
-        return view('users.vice-pres.chairman.create', compact('departments'));
+        return view('users.vice-pres.chairman.create');
     }
 
     /**
@@ -41,7 +40,7 @@ class ChairmanController extends Controller
 
         $chairman = User::create($request->validated());
         $chairman->attachRole('Department_Head');
-        Department::where('id', $request->department_id)->update(['hasChairman' => true]);
+
         if ($request->hasFile('avatar')) {
             $avatar =  $chairman->id . '-' . $request->first_name . '-' . $request->last_name . '.' . $request->avatar->getClientOriginalExtension();
             $request->avatar->move(public_path('images/profile'), $avatar);
@@ -68,9 +67,8 @@ class ChairmanController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(User $chairman)
-    {
-        $departments = Department::get();
-        return view('users.vice-pres.chairman.edit', compact('chairman', 'departments'));
+    {;
+        return view('users.vice-pres.chairman.edit', compact('chairman'));
     }
 
     /**
@@ -83,11 +81,7 @@ class ChairmanController extends Controller
     public function update(UserRequest $request, User $chairman)
     {
         if ($chairman->avatar)  unlink("images/profile/" . $chairman->avatar);
-
-
-        $chairman->department()->update(['hasChairman' => false]);
         $chairman->update($request->validated());
-        $chairman->department()->update(['hasChairman' => true]);
 
         if ($request->hasFile('avatar')) {
             $avatar =  $chairman->id . '-' . $request->first_name . '-' . $request->last_name . '.' . $request->avatar->getClientOriginalExtension();

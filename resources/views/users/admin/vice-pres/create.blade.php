@@ -40,7 +40,7 @@
                                 <x-input id="contact_number" class="block mt-1 w-full" type="text" name="contact_number" :value="old('contact_number')" />
                             </div>
 
-                            <div>
+                            {{-- <div>
                                 <x-label for="department_id" :value="__('Course')" />
                                 <select id="department_id" name="department_id" :value="old('department_id')" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                     <option value="" disabled selected>Select your Department</option>
@@ -49,7 +49,7 @@
                                     @endforeach
 
                                 </select>
-                            </div>
+                            </div> --}}
 
                             <div>
                                 <x-label for="avatar" :value="__('Image')" />

@@ -24,7 +24,10 @@ class DepartmentRequest extends FormRequest
     public function rules()
     {
         return [
+            'code' => 'required|min:2',
             'description' => 'required|min:2',
+            'vp_id' => 'nullable',
+            'chairman_id' => 'nullable',
         ];
     }
 }

@@ -15,8 +15,8 @@
                      <img class="w-10 h-14 rounded-full" src="{{ asset('images/profile/'.$staff->avatar) }}" alt="Vice President Picture" />
                  @endif
                  <div class="col-span-2">
-                     <h1 class="mb-1 text-xl font-bold text-gray-700">{{ $staff->first_name . ' ' .  $staff->last_name}}</h1>
-                     <p class="text-sm font-normal text-gray-600 mr-14 hover:underline">{{  $staff->email }}</p>
+                     <h1 class="mb-1 text-xl font-bold text-gray-700">{{ $staff->staff->full_name}}</h1>
+                     <p class="text-sm font-normal text-gray-600 mr-14 hover:underline">{{  $staff->staff->email }}</p>
                      <p class="text-sm font-normal text-gray-600 mr-14">Staff of: {{  $staff->department->description }}</p>
                  </div>
 
@@ -26,7 +26,7 @@
              <div class="flex justify-around px-10 py-6">
 
                  <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-                     <a href="{{ route('staff.edit', $staff) }}">
+                     <a href="{{ route('staff.edit', $staff->staff) }}">
                          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                          </svg>
@@ -34,7 +34,7 @@
                  </div>
 
                  <div class="w-4 mr-2 transform hover:text-red-800 hover:scale-110">
-                     <form action="{{ route('staff.destroy', $staff) }}" method="POST">
+                     <form action="{{ route('staff.destroy', $staff->staff) }}" method="POST">
                          @csrf
                          @method('DELETE')
                          <button type="submit" onclick="return confirm('Are you sure?')" class="w-4 h-4">

@@ -20,7 +20,6 @@ class CreateUsersTable extends Migration
             $table->string('last_name');
             $table->string('email')->unique();
             $table->string('contact_number')->unique();
-            $table->foreignId('department_id')->nullable()->constrained('departments');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('avatar')->nullable();

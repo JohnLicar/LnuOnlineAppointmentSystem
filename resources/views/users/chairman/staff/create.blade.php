@@ -39,7 +39,7 @@
                                 <x-label for="contact_number" :value="__('Contact Number')" />
                                 <x-input id="contact_number" class="block mt-1 w-full" type="text" name="contact_number" :value="old('contact_number')" />
                             </div>
-                                <x-input id="department_id"  type="hidden" name="department_id" value="{{ auth()->user()->department_id }}" />
+
                             <div>
                                <div wire:loading wire:target="avatar">
                                  <x-loading />

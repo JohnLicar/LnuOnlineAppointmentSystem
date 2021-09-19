@@ -15,11 +15,14 @@
                     <img class="w-10 h-14 rounded-full" src="{{ asset('images/profile/'.$vicePresident->avatar) }}" alt="Vice President Picture" />
                 @endif
                 <div class="col-span-2">
-                    <h1 class="mb-1 text-xl font-bold text-gray-700">{{ $vicePresident->first_name . ' ' .  $vicePresident->last_name}}</h1>
+                    <h1 class="mb-1 text-xl font-bold text-gray-700">{{ $vicePresident->full_name}}</h1>
                     <p class="text-sm font-normal text-gray-600 mr-14 hover:underline">{{  $vicePresident->email }}</p>
-                    <p class="text-sm font-normal text-gray-600 mr-14">VP of: {{  $vicePresident->department->description }}</p>
                 </div>
+            </div>
 
+
+            <div class="ml-5">
+                <li>{{ $vicePresident->vice_pres->description ?? 'No department was assigned' }}</li>
             </div>
 
             {{-- <img src="https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1052&q=80" alt="" /> --}}

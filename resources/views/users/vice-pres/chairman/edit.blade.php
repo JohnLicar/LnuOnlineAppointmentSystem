@@ -42,18 +42,6 @@
                             </div>
 
                             <div>
-                                <x-label for="department_id" :value="__('Department')" />
-                                <select id="department_id" name="department_id" :value="old('department_id')" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                                    <option value="" disabled selected>Select your Department</option>
-                                    @foreach ($departments as $department)
-                                        <option value="{{ $department->id }}" @if($department->id === $chairman->department_id)
-                                            selected @endif>{{ $department->description }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div>
                                 <x-label for="avatar" :value="__('Image')" />
                                 <div class="flex">
                                   @if ($chairman->avatar)

@@ -14,11 +14,11 @@ class VicePresTable extends Component
     public function render()
     {
         $vicePresidents = User::search($this->search)
-            ->with('department')
+            ->with('vice_pres')
             ->whereRoleIs('Vice_President')
             ->orderByDesc('id')
             ->Paginate(3);
-
+        // dd($vicePresidents);
         return view('livewire.vice-pres-table', compact('vicePresidents'));
     }
 

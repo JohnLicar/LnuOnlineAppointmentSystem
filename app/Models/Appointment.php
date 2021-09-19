@@ -10,8 +10,8 @@ class Appointment extends Model
 {
     use HasFactory, Notifiable;
     protected $fillable = [
-        'service_id',
         'queuing_number',
+        'department_id',
         'scheduled_date',
         'first_name',
         'middle_name',
@@ -21,15 +21,11 @@ class Appointment extends Model
         'contact_number',
     ];
 
-    public function service()
+    public function department()
     {
-        return $this->belongsTo(Service::class);
+        return $this->belongsTo(Department::class);
     }
 
-    public function course()
-    {
-        return $this->belongsTo(Course::class);
-    }
 
 
     public function routeNotificationForNexmo($notification)

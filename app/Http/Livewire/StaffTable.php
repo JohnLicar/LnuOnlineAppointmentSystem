@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\User;
+use App\Models\Staff;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -14,10 +14,8 @@ class StaffTable extends Component
 
     public function render()
     {
-        $staffs = User::search($this->search)
-            ->with('department')
-            ->where('department_id', auth()->user()->department_id)
-            ->whereRoleIs('Staff')
+        $staffs = Staff::search($this->search)
+            ->with(['staff', 'department'])
             ->orderByDesc('id')
             ->Paginate(3);
         return view('livewire.staff-table', compact('staffs'));

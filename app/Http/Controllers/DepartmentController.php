@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\DepartmentRequest;
 use App\Models\Department;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
@@ -26,7 +27,13 @@ class DepartmentController extends Controller
      */
     public function create()
     {
-        return view('users.admin.department.create');
+
+        $chairs = Department::whereNotNull('chairman_id')->get('chairman_id')->toArray();
+        $vice_presidents = User::with('vice_pres')->whereRoleIs('Vice_President')->get();
+        $chairmans = User::with('chairman')->whereRoleIs('Department_Head')
+            ->whereNotIn('id', $chairs)
+            ->get();
+        return view('users.admin.department.create', compact('vice_presidents', 'chairmans'));
     }
 
     /**
@@ -60,7 +67,12 @@ class DepartmentController extends Controller
      */
     public function edit(Department $department)
     {
-        //
+        $chairs = Department::whereNotNull('chairman_id')->get('chairman_id');
+        $vice_presidents = User::with('vice_pres')->whereRoleIs('Vice_President')->get();
+        $chairmans = User::with('chairman')->whereRoleIs('Department_Head')
+            ->whereNotIn('id', $chairs)
+            ->get();
+        return view('users.admin.department.edit', compact('department', 'vice_presidents', 'chairmans'));
     }
 
     /**
@@ -70,9 +82,10 @@ class DepartmentController extends Controller
      * @param  \App\Models\Department  $department
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Department $department)
+    public function update(DepartmentRequest $request, Department $department)
     {
-        //
+        $department->update($request->validated());
+        return view('users.admin.department.index')->with('message', 'Department Updated Successfully');
     }
 
     /**

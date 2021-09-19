@@ -4,6 +4,7 @@ namespace App\Actions;
 
 use Illuminate\Http\Request;
 use App\Models\Appointment;
+use App\Models\Department;
 use App\Models\Service;
 use App\Notifications\AppointmentNotification;
 use Carbon\Carbon;
@@ -12,11 +13,11 @@ class StoreAppointmentAction
 {
     public function execute(Request $request)
     {
-        $transactionCode = Service::select('code')
-            ->where('id', $request->service_id)->first();
+        $transactionCode = Department::select('code')
+            ->where('id', $request->department_id)->first();
 
         $autoTN = Appointment::select('queuing_number')
-            ->where('service_id', $request->service_id)
+            ->where('department_id', $request->department_id)
             ->orderBy('id', 'desc')
             ->first();
 
@@ -33,20 +34,19 @@ class StoreAppointmentAction
         $validated = $request->validate([
             // 'studentID' => ['required', 'min:6'],
             'queuing_number' => ['required'],
-            'service_id' => ['required'],
+            'department_id' => ['required'],
             'scheduled_date' => ['required', 'date', 'min:3'],
             'first_name' => ['required', 'min:2'],
             'middle_name' => ['required', 'min:2'],
             'last_name' => ['required', 'min:2'],
-            'course_id' => ['required', 'exists:App\Models\Course,id', 'integer'],
             'email' => ['required', 'email', 'min:6'],
             'contact_number' => ['required', 'min:3'],
 
         ]);
+        // dd($validated);
 
         $date = Carbon::parse($request->appointmentDate, 'UTC');
         $date->isoFormat('MMM Do YY');
-        dd($date);
 
         $clientData = [
             'body' => 'Hello ' . $request->name . ' Welcome to MIS Queuing System!

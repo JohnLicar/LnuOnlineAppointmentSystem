@@ -31,9 +31,29 @@ class UserSeeder extends Seeder
         $Vice_President->first_name = 'Kyle';
         $Vice_President->email = 'kyle@gmail.com';
         $Vice_President->contact_number = '09655998518';
-        $Vice_President->department_id = 1;
         $Vice_President->password = Hash::make('password');
         $Vice_President->save();
         $Vice_President->attachRole('Vice_President');
+
+
+        $Vice_President = new User();
+        $Vice_President->last_name = 'Odtuhan';
+        $Vice_President->middle_name = 'Gwaps';
+        $Vice_President->first_name = 'Patrick';
+        $Vice_President->email = 'patrick@gmail.com';
+        $Vice_President->contact_number = '09655998519';
+        $Vice_President->password = Hash::make('password');
+        $Vice_President->save();
+        $Vice_President->attachRole('Department_Head');
+
+        $Vice_President = new User();
+        $Vice_President->last_name = 'Vergel';
+        $Vice_President->middle_name = 'Martin';
+        $Vice_President->first_name = 'Edd';
+        $Vice_President->email = 'edd@gmail.com';
+        $Vice_President->contact_number = '09655998514';
+        $Vice_President->password = Hash::make('password');
+        $Vice_President->save();
+        $Vice_President->attachRole('Department_Head');
     }
 }
