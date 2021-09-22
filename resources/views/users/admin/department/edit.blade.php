@@ -43,6 +43,7 @@
                                 <x-label for="chairman_id" :value="__('Chairman')" />
                                 <select id="chairman_id" name="chairman_id" :value="old('chairman_id')" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                     <option value="" disabled selected>Select Vice President for this Department</option>
+                                    <option value="">Vacant</option>
                                     @foreach ($chairmans as $chairman)
                                         <option value="{{ $chairman->id }}">
                                             {{ $chairman->full_name }}

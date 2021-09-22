@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Appointment;
+use App\Models\Department;
 use Illuminate\Http\Request;
 
 class AppointmentController extends Controller
@@ -45,7 +46,7 @@ class AppointmentController extends Controller
      */
     public function show(Appointment $appointment)
     {
-        //
+        return view('users.staff.serving.index', compact('appointment'));
     }
 
     /**
@@ -56,7 +57,7 @@ class AppointmentController extends Controller
      */
     public function edit(Appointment $appointment)
     {
-        dd($appointment);
+        //
     }
 
     /**
@@ -80,5 +81,16 @@ class AppointmentController extends Controller
     public function destroy(Appointment $appointment)
     {
         //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Appointment  $appointment
+     * @return \Illuminate\Http\Response
+     */
+    public function servings()
+    {
+        return view('users.staff.serving.index');
     }
 }

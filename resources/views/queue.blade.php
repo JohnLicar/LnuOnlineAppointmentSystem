@@ -16,7 +16,7 @@
                     </div>
 
                     <!-- component -->
-                    @livewire('queue-display')
+                     @livewire('serving')
                 </div>
             </div>
         </div>

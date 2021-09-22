@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateServingsTable extends Migration
+class CreateCountersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreateServingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('servings', function (Blueprint $table) {
+        Schema::create('counters', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("appointment_id")->constrained('appointments');
+            $table->string("description");
+            $table->foreignId("department_id")->constrained('departments')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ class CreateServingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('servings');
+        Schema::dropIfExists('counters');
     }
 }

@@ -13,6 +13,7 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "livewire/livewire": "^2.5",
+        "pusher/pusher-php-server": "^7.0",
         "santigarcor/laratrust": "^6.3",
         "staudenmeir/belongs-to-through": "^2.5"
     },

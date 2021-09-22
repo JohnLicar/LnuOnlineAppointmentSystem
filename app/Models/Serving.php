@@ -9,6 +9,16 @@ class Serving extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'counter_id',
         'appointment_id'
     ];
+
+    public function appointment()
+    {
+        return $this->belongsTo(Appointment::class);
+    }
+    public function counter()
+    {
+        return $this->belongsTo(Counter::class);
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Counter;
 use App\Models\Service;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -15,9 +16,10 @@ class ServiceTable extends Component
 
     public function render()
     {
+
         $services = Service::search($this->search)
             ->with('department')
-            ->where('department_id', auth()->user()->department_id)
+            ->where('department_id', auth()->user()->chairman->id)
             ->orderByDesc('id')
             ->Paginate(3);
         return view('livewire.service-table', compact('services'));

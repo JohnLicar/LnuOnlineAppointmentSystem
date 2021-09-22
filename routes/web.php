@@ -1,9 +1,11 @@
 <?php
 
+use App\Events\ServingDisplay;
 use App\Http\Controllers\{
     AppointmentController,
     CalenderController,
     ChairmanController,
+    CounterController,
     DashboardController,
     DepartmentController,
     SaveAppointment,
@@ -29,9 +31,9 @@ Route::get('/', function () {
 })->name('welcome');
 Route::post('store', SaveAppointment::class)->name('store');
 
-Route::get('serving/', function () {
-    return view('users.serving.index');
-})->name('serving');
+// Route::get('/event', function () {
+//     return event(ServingDisplay('this is first broadcast '));
+// });
 
 // Route::get('calendar-event', [CalenderController::class, 'index']);
 // Route::get('get-events', [CalenderController::class, 'getEvents']);
@@ -59,9 +61,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(['prefix' => 'chairman', 'middleware' => ['role:Department_Head']], function () {
         Route::resource('staff', StaffController::class);
         Route::resource('service', ServiceController::class);
+        Route::resource('counter', CounterController::class);
     });
 
     Route::group(['prefix' => 'staff', 'middleware' => ['role:Staff']], function () {
+
+        Route::get('serving/{serving}', [AppointmentController::class, 'servings'])->name('serving');
         Route::resource('appointments', AppointmentController::class);
     });
 });

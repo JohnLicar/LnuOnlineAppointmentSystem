@@ -15,8 +15,8 @@ class CreateStaffTable extends Migration
     {
         Schema::create('staff', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("user_id")->constrained('users');
-            $table->foreignId("department_id")->constrained('departments');
+            $table->foreignId("user_id")->constrained('users')->onDelete('cascade');
+            $table->foreignId("department_id")->constrained('departments')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -6,19 +6,35 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>{{ config('app.name', 'Laravel') }}</title>
+    <link rel="icon" href="{{ asset('images/logo/LNU.png') }}" type="image/x-icon"/>
+
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
+        {{-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap"> --}}
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap">
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
+    @livewireStyles
     </head>
     <body>
-        <div class="font-sans text-gray-900 antialiased">
+        <div class="font-sans antialiased">
+            <div class="flex ml-5 h-16">
+                <div class="flex">
+                    <!-- Logo -->
+                        <div class="flex-shrink-0 flex items-center">
+                            <a href="{{ route('dashboard') }}">
+                                <x-application-logo-black class="block h-14 w-auto fill-current text-gray-600" />
+                            </a>
+                        </div>
+                </div>
+            </div>
             {{ $slot }}
         </div>
+            @livewireScripts
+    @stack('scripts')
     </body>
 </html>
