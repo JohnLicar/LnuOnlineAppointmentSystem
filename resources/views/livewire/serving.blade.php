@@ -41,32 +41,28 @@
                 </div>
 
                 <div class="text-7xl font-bold text-center m-4">
-                    @if (!empty($call))
-                        {{ $call }}
-                    @else
-                        MIS
-                    @endif
+                    {{  $nextQueue->appointment->queuing_number ?? 'Call' }}
                 </div>
+                {{-- <div class="text-7xl font-bold text-center m-4">
+                    {{ session('callQueue') ?? 'Call' }}
+                </div> --}}
+
                 <div class="flex border-t-4 border-indigo-800">
                     <div class="text-4xl text-left  border-r-4 border-indigo-800 text-black font-bold p-2">
                         <h1>Next</h1>
                     </div>
                     <div class="text-4xl text-center border-indigo-800  w-full text-black font-bold   p-2">
 
-                        @if (!empty($call))
-                            <h1>{{ $next }}</h1>
-                        @else
-                            MIS
-                        @endif
+                        {{ $nextQueue->nextQueue->queuing_number ?? 'No one next' }}
+
                     </div>
                 </div>
             </div>
             <div class="text-black border-4 mt-2 border-indigo-800 shadow-lg">
                 <div class="text-4xl text-center text-white font-bold  m-2 bg-indigo-800 shadow-lg p-2">
-                    <h1>Please Proceed to {{ $counterCall }}</h1>
+                    <h1>Please Proceed to   {{ $nextQueue->counter->description ?? 'Counter' }}</h1>
                 </div>
             </div>
          </div>
-
      </div>
 </div>

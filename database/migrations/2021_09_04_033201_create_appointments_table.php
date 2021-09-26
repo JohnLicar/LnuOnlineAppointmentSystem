@@ -23,6 +23,7 @@ class CreateAppointmentsTable extends Migration
             $table->string("last_name");
             $table->string('email');
             $table->string('contact_number');
+            $table->boolean('serving')->default(false);
             $table->timestamps();
         });
     }

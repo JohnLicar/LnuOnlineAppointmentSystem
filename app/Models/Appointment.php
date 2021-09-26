@@ -26,10 +26,17 @@ class Appointment extends Model
         return $this->belongsTo(Department::class);
     }
 
-
-
     public function routeNotificationForNexmo($notification)
     {
         return $this->contact_number;
+    }
+
+    public function getFullNameAttribute()
+    {
+        return sprintf(
+            '%s %s',
+            $this->first_name,
+            $this->last_name
+        );
     }
 }

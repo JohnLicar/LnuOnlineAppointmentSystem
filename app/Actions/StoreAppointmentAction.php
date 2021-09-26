@@ -5,7 +5,6 @@ namespace App\Actions;
 use Illuminate\Http\Request;
 use App\Models\Appointment;
 use App\Models\Department;
-use App\Models\Service;
 use App\Notifications\AppointmentNotification;
 use Carbon\Carbon;
 
@@ -45,8 +44,7 @@ class StoreAppointmentAction
         ]);
         // dd($validated);
 
-        $date = Carbon::parse($request->appointmentDate, 'UTC');
-        $date->isoFormat('MMM Do YY');
+        $date = Carbon::parse($request->appointmentDate)->format('d M Y');
 
         $clientData = [
             'body' => 'Hello ' . $request->name . ' Welcome to MIS Queuing System!

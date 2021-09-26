@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Counter;
+use App\Models\Serving as ModelsServing;
 use Livewire\Component;
 
 class Serving extends Component
@@ -16,10 +17,14 @@ class Serving extends Component
 
     public function render()
     {
-        $counters = Counter::with(['serving', 'department'])
+        $counters = Counter::with(['serving', 'serving.appointment'])
             ->where('department_id', auth()->user()->department_staff->department_id)
+            ->orderBy('id', 'DESC')
             ->get();
 
-        return view('livewire.serving', compact('counters'));
+        $nextQueue = ModelsServing::with('appointment', 'nextQueue', 'counter')->WhereIn('counter_id', $counters->pluck('id'))
+            ->latest()->first();
+
+        return view('livewire.serving', compact('nextQueue', 'counters'));
     }
 }

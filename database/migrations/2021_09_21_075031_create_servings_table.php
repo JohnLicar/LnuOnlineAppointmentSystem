@@ -19,8 +19,9 @@ class CreateServingsTable extends Migration
     {
         Schema::create('servings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("counter_id")->constrained('counters')->onDelete('cascade');
-            $table->foreignId("appointment_id")->constrained('appointments')->onDelete('cascade');
+            $table->foreignId("counter_id")->unique()->constrained('counters')->onDelete('cascade');
+            $table->foreignId("appointment_id")->unique()->constrained('appointments')->onDelete('cascade');
+            $table->foreignId("next_id")->unique()->nullable()->constrained('appointments')->onDelete('cascade');
             $table->timestamps();
         });
     }

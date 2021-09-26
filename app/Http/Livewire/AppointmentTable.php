@@ -2,8 +2,10 @@
 
 namespace App\Http\Livewire;
 
+use App\Actions\SendNotificationToFirstFiveQueue;
 use App\Models\Appointment;
 use App\Events\ServingDisplay;
+use App\Events\AppointmentEvent;
 use App\Models\Counter;
 use App\Models\Serving;
 use Carbon\Carbon;
@@ -11,32 +13,42 @@ use Livewire\Component;
 
 class AppointmentTable extends Component
 {
+    public $counter_id;
+    public $counters;
 
     public function mount()
     {
-        $this->counters = Counter::with('department')
-            ->where('department_id', auth()->user()->department_staff->department_id)
-            ->get();
+        $this->counters = Counter::where('department_id', auth()->user()->department_staff->department_id)->get();
     }
 
+    protected $listeners = ['echo:update-appointment-display,AppointmentEvent' => 'render'];
 
     public function render()
     {
         $appointments = Appointment::with('department')
             ->where('scheduled_date', Carbon::now()->toDateString())
             ->where('department_id', auth()->user()->department_staff->department_id)
+            ->where('serving', false)
             ->get();
 
         return view('livewire.appointment-table', compact('appointments'));
     }
 
-    public function callQueue($appointment_id, $counter_id)
+    public function callQueue($appointment_id, $counter_id, $next = null, SendNotificationToFirstFiveQueue $sendNotificationToFirstFiveQueue)
     {
-        // dd($appointment_id, $counter_id);
-        event(new ServingDisplay());
-        Serving::create([
+        Appointment::where('id', $appointment_id)
+            ->update(['serving' => true]);
+
+        $serving = Serving::create([
             'appointment_id' => $appointment_id,
             'counter_id' => $counter_id,
+            'next_id' => $next
         ]);
+
+        event(new ServingDisplay());
+        event(new AppointmentEvent());
+        $this->emit('ServingQueued', $serving->appointment_id);
+
+        $sendNotificationToFirstFiveQueue->execute(auth()->user()->department_staff->department->description);
     }
 }

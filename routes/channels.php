@@ -19,3 +19,6 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 Broadcast::channel('update-display', function () {
     return true;
 });
+Broadcast::channel('update-appointment-display', function () {
+    return true;
+});
