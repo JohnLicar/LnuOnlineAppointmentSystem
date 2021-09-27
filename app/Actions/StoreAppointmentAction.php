@@ -16,9 +16,11 @@ class StoreAppointmentAction
             ->where('id', $request->department_id)->first();
 
         $autoTN = Appointment::select('queuing_number')
+            ->where('scheduled_date', $request->scheduled_date)
             ->where('department_id', $request->department_id)
             ->orderBy('id', 'desc')
             ->first();
+
 
         if (!$autoTN || $autoTN === null) {
             $queuingNumber = $transactionCode->code . -1;
@@ -31,7 +33,6 @@ class StoreAppointmentAction
 
 
         $validated = $request->validate([
-            // 'studentID' => ['required', 'min:6'],
             'queuing_number' => ['required'],
             'department_id' => ['required'],
             'scheduled_date' => ['required', 'date', 'min:3'],
@@ -42,12 +43,11 @@ class StoreAppointmentAction
             'contact_number' => ['required', 'min:3'],
 
         ]);
-        // dd($validated);
 
         $date = Carbon::parse($request->appointmentDate)->format('d M Y');
 
         $clientData = [
-            'body' => 'Hello ' . $request->name . ' Welcome to MIS Queuing System!
+            'body' => 'Hello ' . $request->first_name . ' ' . $request->last_name . ' Welcome to MIS Queuing System!
                 Your Queuing Number is ' . $queuingNumber . ' and will be Valid only on ' . $date,
             'thankyou' => 'Thank you for using LNU Queuing System',
         ];

@@ -6,7 +6,7 @@
     <div class="my-5">
         <div class="flex justify-content-between">
            <div>
-              <h4 class="font-semibold">Available Slot: <span id="slot" class="font-weight-bold"></span> </h4>
+              <h4 class="font-semibold">Available Slot: <span id="slot" class="font-bold text-lg  text-indigo-900"></span> </h4>
            </div>
         </div>
      </div>

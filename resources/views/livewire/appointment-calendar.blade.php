@@ -122,11 +122,20 @@
 				},
 
 				showEventModal(date) {
-					this.event_dateToDb = new Date(this.year, this.month, date).toLocaleString('fr-CA', { year: 'numeric', month: '2-digit', day: '2-digit' });
+
+                    this.event_dateToDb = new Date(this.year, this.month, date).toLocaleString('fr-CA', { year: 'numeric', month: '2-digit', day: '2-digit' });
 					this.event_date = new Date(this.year, this.month, date).toDateString();
                     document.getElementById("scheduled").value = this.event_date
                     document.getElementById("scheduled_date").value = this.event_dateToDb
-                    console.log(this.event_dateToDb);
+
+                    $.ajax({
+                        type: "GET",
+                        url: "/staff/appointments/" +this.event_dateToDb+ "/edit",
+                        success: function(result){
+                            $('#slot').text(result);
+                        }
+                    });
+
 				},
 
 				addEvent() {
