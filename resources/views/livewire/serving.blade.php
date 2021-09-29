@@ -54,6 +54,8 @@
                     <div class="text-4xl text-center border-indigo-800  w-full text-black font-bold   p-2">
 
                         {{ $nextQueue->nextQueue->queuing_number ?? 'No one next' }}
+                        <span>||</span>
+                        {{ $nextQueue->nextQueue->full_name ?? 'No one next' }}
 
                     </div>
                 </div>

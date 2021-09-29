@@ -36,8 +36,7 @@ class AppointmentTable extends Component
 
     public function callQueue($appointment_id, $counter_id, $next = null, SendNotificationToFirstFiveQueue $sendNotificationToFirstFiveQueue)
     {
-        Appointment::where('id', $appointment_id)
-            ->update(['serving' => true]);
+
 
         $serving = Serving::create([
             'appointment_id' => $appointment_id,
@@ -45,10 +44,14 @@ class AppointmentTable extends Component
             'next_id' => $next
         ]);
 
-        event(new ServingDisplay());
-        event(new AppointmentEvent());
-        $this->emit('ServingQueued', $serving->appointment_id);
+        $appointment =  tap(Appointment::where('id', $appointment_id))
+            ->update(['serving' => true])
+            ->first();
 
-        $sendNotificationToFirstFiveQueue->execute(auth()->user()->department_staff->department->description);
+        event(new AppointmentEvent());
+        event(new ServingDisplay());
+        $this->emit('ServingQueued', $appointment, $serving->id, $counter_id);
+
+        // $sendNotificationToFirstFiveQueue->execute(auth()->user()->department_staff->department->description);
     }
 }

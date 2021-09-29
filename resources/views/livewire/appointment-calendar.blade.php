@@ -130,7 +130,7 @@
 
                     $.ajax({
                         type: "GET",
-                        url: "/staff/appointments/" +this.event_dateToDb+ "/edit",
+                        url: `available/slots/${this.event_dateToDb}`,
                         success: function(result){
                             $('#slot').text(result);
                         }

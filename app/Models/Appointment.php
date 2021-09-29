@@ -19,6 +19,7 @@ class Appointment extends Model
         'course_id',
         'email',
         'contact_number',
+        'serving',
     ];
 
     public function department()

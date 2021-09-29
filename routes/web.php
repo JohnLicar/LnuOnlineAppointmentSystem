@@ -3,6 +3,7 @@
 use App\Events\ServingDisplay;
 use App\Http\Controllers\{
     AppointmentController,
+    AvailableSlotController,
     CalenderController,
     ChairmanController,
     CounterController,
@@ -29,21 +30,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
+
 Route::post('store', SaveAppointment::class)->name('store');
 
-// Route::get('/event', function () {
-//     return event(ServingDisplay('this is first broadcast '));
-// });
-
-// Route::get('calendar-event', [CalenderController::class, 'index']);
-// Route::get('get-events', [CalenderController::class, 'getEvents']);
-// Route::post('calendar-crud-ajax', [CalenderController::class, 'calendarEvents']);
-// Route::get('/', [CalendarController::class, 'index']);
-
-
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth'])->name('dashboard');
+Route::get('/available/slots/{appointmentDate}', [AvailableSlotController::class, '__invoke'])->name('available.slot');
 
 Route::group(['middleware' => ['auth']], function () {
 

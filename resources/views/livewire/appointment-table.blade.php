@@ -1,6 +1,5 @@
 <div class="overflow-x-auto" >
     <div class="w-full">
-
         <div class="grid md:grid-cols-5 sm:grid-cols-1 gap-4">
             @livewire('appointment-table-form')
             <div class="col-span-4 overflow-x-auto">

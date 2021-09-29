@@ -53,7 +53,7 @@ class StaffController extends Controller
             $request->avatar->move(public_path('images/profile'), $avatar);
             $staffs->update(['avatar' => $avatar]);
         }
-
+        // notify()->success('Laravel Notify is awesome!');
         return redirect()->route('staff.index')->with('message', 'Staff Added Successful');
     }
 

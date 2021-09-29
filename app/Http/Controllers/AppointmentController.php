@@ -55,12 +55,8 @@ class AppointmentController extends Controller
      * @param  \App\Models\Appointment  $appointment
      * @return \Illuminate\Http\Response
      */
-    public function edit($appointment)
+    public function edit(Request $request)
     {
-        $countPerDay = Appointment::where('scheduled_date', $appointment)->count();
-
-        $availableSlot = (100 - $countPerDay);
-        return $availableSlot;
     }
 
     /**

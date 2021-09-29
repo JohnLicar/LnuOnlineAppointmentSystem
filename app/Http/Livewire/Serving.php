@@ -19,10 +19,9 @@ class Serving extends Component
     {
         $counters = Counter::with(['serving', 'serving.appointment'])
             ->where('department_id', auth()->user()->department_staff->department_id)
-            ->orderBy('id', 'DESC')
             ->get();
 
-        $nextQueue = ModelsServing::with('appointment', 'nextQueue', 'counter')->WhereIn('counter_id', $counters->pluck('id'))
+        $nextQueue = ModelsServing::with('appointment', 'nextQueue')->WhereIn('counter_id', $counters->pluck('id'))
             ->latest()->first();
 
         return view('livewire.serving', compact('nextQueue', 'counters'));

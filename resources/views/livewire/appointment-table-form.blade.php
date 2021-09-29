@@ -8,27 +8,27 @@
 
             <div>
                 <x-label for="name" :value="__('First Name')" />
-                <x-input id="first_name" class="block mt-1 w-full" type="text" name="first_name" wire:model="first_name" required  />
+                <x-input id="first_name" class="block mt-1 w-full" type="text" name="first_name" wire:model="clientInfo.first_name" required  />
             </div>
 
             <div class="mt-2">
                 <x-label for="middle_name" :value="__('Middle Name')" />
-                <x-input id="middle_name" class="block mt-1 w-full" type="text" name="middle_name" wire:model="middle_name" required/>
+                <x-input id="middle_name" class="block mt-1 w-full" type="text" name="middle_name" wire:model="clientInfo.middle_name" required/>
             </div>
 
             <div class="mt-2">
                 <x-label for="last_name" :value="__('Last Name')" />
-                <x-input id="last_name" class="block mt-1 w-full" type="text" name="last_name" wire:model="last_name" required/>
+                <x-input id="last_name" class="block mt-1 w-full" type="text" name="last_name" wire:model="clientInfo.last_name" required/>
             </div>
 
             <div class="col-span-3 mt-2">
                 <x-label for="email" :value="__('Email')" />
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" wire:model="email" required/>
+                <x-input id="email" class="block mt-1 w-full" type="email" name="email" wire:model="clientInfo.email" required/>
             </div>
 
             <div class="col-span-3 mt-2">
                 <x-label for="contact_number" :value="__('Contact Number')" />
-                <x-input id="contact_number" class="block mt-1 w-full" type="text" name="contact_number" wire:model="contact_number" required/>
+                <x-input id="contact_number" class="block mt-1 w-full" type="text" name="contact_number" wire:model="clientInfo.contact_number" required/>
             </div>
 
         </div>
@@ -43,13 +43,13 @@
                 </x-button>
 
             @else
-                <select wire:model.lazy="department_id"  id="department_id" name="department_id" class=" mb-2 w-full rounded-md  focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required autofocus>
-                    <option value="" disabled selected>Select your Service you want</option>
+                <select wire:model.lazy="clientInfo.department_id"  id="department_id" name="department_id" class=" mb-2 w-full rounded-md  focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required autofocus>
+                    <option value="" disabled selected>Select Department to Pass</option>
                     @foreach ($departments as $department)
                     <option value="{{ $department->id }}">{{ $department->description }}</option>
                     @endforeach
                 </select>
-                <x-button class="px-10 bg-blue-900" wire:click.prevent="passToNextDepartment({{ $department_id }})" wire:click="$emit('reRender')">
+                <x-button class="px-10 bg-blue-900" wire:click.prevent="passToNextDepartment({{ $clientInfo->department_id }})" wire:click="$emit('reRender')">
                     {{ __('Send to next Dept.') }}
                 </x-button>
             @endif

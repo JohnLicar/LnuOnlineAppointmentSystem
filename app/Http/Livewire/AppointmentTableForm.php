@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Actions\LogsAction;
 use App\Models\Appointment;
 use App\Models\Department;
 use App\Models\Serving;
@@ -10,14 +11,19 @@ use Livewire\Component;
 class AppointmentTableForm extends Component
 {
     public $servingID;
-    public $clientId;
-    public $first_name;
-    public $middle_name;
-    public $last_name;
-    public $email;
-    public $contact_number;
-    public $department_id;
+    public $clientInfo;
+    public $counter_id;
     public bool $toggleA = false;
+
+
+    protected $rules = [
+        'clientInfo.first_name' => 'required', //whatever rules you want
+        'clientInfo.middle_name' => 'required', //whatever rules you want
+        'clientInfo.last_name' => 'required', //whatever rules you want
+        'clientInfo.email' => 'required',
+        'clientInfo.contact_number' => 'required',
+        'clientInfo.department_id' => 'required',
+    ];
 
     protected $listeners = [
         'ServingQueued', 'reRender' => 'render',
@@ -29,52 +35,49 @@ class AppointmentTableForm extends Component
         return view('livewire.appointment-table-form', compact('departments'));
     }
 
-    public function clearData()
+    public function ServingQueued(Appointment $appointment, $serving, $counter_id)
     {
-        $this->clientId = "";
-        $this->first_name = "";
-        $this->middle_name = "";
-        $this->last_name = "";
-        $this->email = "";
-        $this->contact_number = "";
-        $this->department_id = "";
-        $this->toggleA = false;
+        $this->clientInfo =  $appointment;
+        $this->servingID = $serving;
+        $this->counter_id = $counter_id;
     }
 
-    public function ServingQueued($value)
+    public function passToNextDepartment($department_id, LogsAction $logsAction)
     {
-        $clientInfo =  Appointment::where('id', $value)->first();
 
-        $this->first_name = $clientInfo->first_name;
-        $this->middle_name = $clientInfo->middle_name;
-        $this->last_name = $clientInfo->last_name;
-        $this->email = $clientInfo->email;
-        $this->contact_number = $clientInfo->contact_number;
-        $this->clientId = $clientInfo->id;
-        $this->servingID = $value;
-    }
+        $logsAction->execute($this->clientInfo, $this->counter_id);
 
-    public function passToNextDepartment($department_id)
-    {
-        Appointment::where('id', $this->clientId)
-            ->update([
-                'serving' => false,
-                'department_id' => $department_id
-            ]);
-
-        Serving::where('appointment_id', $this->servingID)->delete();
-
+        $this->clientInfo->update([
+            'serving' => '0',
+            'department_id' => $department_id
+        ]);
+        Serving::where('id', $this->servingID)->delete();
         $this->clearData();
 
-        session()->flash('message', 'Appointment successfully Passed to next Department!');
+        $this->alert('success', 'Client Successfully Passed to next Department', [
+            'position' => 'top-end',
+            'timer' => 3000,
+            'toast' => true,
+            'showCancelButton' => false,
+            'showConfirmButton' => false
+        ]);
     }
 
-    public function doneAppointment()
+    public function doneAppointment(LogsAction $logsAction)
     {
-
-        Appointment::where('id', $this->clientId)
+        Appointment::where('id', $this->clientInfo)
             ->delete();
         $this->clearData();
+        $logsAction->execute($this->clientInfo, $this->counter_id);
+
         session()->flash('message', 'Appointment successfully done!');
+    }
+
+    public function clearData()
+    {
+        $this->servingID = "";
+        $this->clientInfo = "";
+        $this->counter_id = "";
+        $this->toggleA = false;
     }
 }
