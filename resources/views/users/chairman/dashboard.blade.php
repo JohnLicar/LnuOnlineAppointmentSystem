@@ -7,31 +7,43 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="grid grid-cols-3 gap-4 p-6 bg-white border-b border-gray-200">
-                    <div class="w-80 bg-blue-500 border rounded-lg py-2 shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-105 ">
-                        <div class="flex items-center ml-5 mb-2 space-x-4">
-                            <div class="col-span-2">
-                                <h1 class=" text-xl font-bold text-white">Appointment for this day</h1>
-                            </div>
+                <div class="flex justify-between p-6 bg-white border-b border-gray-200">
+                    <div class="w-80 bg-blue-500 border rounded-md py-2 shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-105 ">
+                        <h1 class="ml-5 text-xl font-bold text-white">Appointment for this day</h1>
+                        <div class="flex ml-14 mt-4 text-white">
+                            <img src="{{ asset('images/icons/queue.png') }}" alt="">
+                            <p class="text-7xl ml-14  font-black">{{ $appointmentToday }}</p>
                         </div>
                     </div>
-                    <div class="w-80 bg-blue-500 border rounded-lg py-2 shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-105 ">
-                        <div class="flex items-center ml-5 mb-2 space-x-4">
-                            <div class="col-span-2">
-                                <h1 class=" text-xl font-bold text-white">Appointment for this day</h1>
-                            </div>
+                    <div class="w-80 bg-green-500 border rounded-md py-2 shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-105 ">
+                        <h1 class="ml-5 text-xl font-bold text-white">Transaction completed this day</h1>
+                        <div class="flex ml-14 mt-4 text-white">
+                            <img src="{{ asset('images/icons/task-completed.png') }}" alt="">
+                            <p class="text-7xl ml-14  font-black">{{ $completedToday }}</p>
                         </div>
                     </div>
-                    <div class="w-80 bg-blue-500 border rounded-lg py-2 shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-105 ">
-                        <div class="flex items-center ml-5 mb-2 space-x-4">
-                            <div class="col-span-2">
-                                <h1 class=" text-xl font-bold text-white">Appointment for this day</h1>
-                            </div>
+                    <div class="w-80 bg-yellow-500 border rounded-md py-2 shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-105 ">
+                        <h1 class="ml-5 text-xl font-bold text-white">Active Counter</h1>
+                        <div class="flex ml-14 mt-4 text-white">
+                            <img src="{{ asset('images/icons/counter.png') }}" alt="">
+                            <p class="text-7xl ml-14  font-black">{{ 1 }}</p>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <div class="bg-white  my-5 overflow-hidden shadow-sm sm:rounded-lg">
+                <h1 class="text-2xl ml-5">{{ $chart1->options['chart_title'] }}</h1>
+                {!! $chart1->renderHtml() !!}
+
+            </div>
+
         </div>
     </div>
 </x-app-layout>
+
+@push('scripts')
+    {!! $chart1->renderChartJsLibrary() !!}
+    {!! $chart1->renderJs() !!}

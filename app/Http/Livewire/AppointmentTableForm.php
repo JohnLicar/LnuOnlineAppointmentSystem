@@ -65,12 +65,18 @@ class AppointmentTableForm extends Component
 
     public function doneAppointment(LogsAction $logsAction)
     {
-        Appointment::where('id', $this->clientInfo)
-            ->delete();
-        $this->clearData();
         $logsAction->execute($this->clientInfo, $this->counter_id);
 
-        session()->flash('message', 'Appointment successfully done!');
+        Appointment::where('id', $this->clientInfo->id)
+            ->delete();
+        $this->clearData();
+        $this->alert('success', 'Client Successfully Passed to next Department', [
+            'position' => 'top-end',
+            'timer' => 3000,
+            'toast' => true,
+            'showCancelButton' => false,
+            'showConfirmButton' => false
+        ]);
     }
 
     public function clearData()

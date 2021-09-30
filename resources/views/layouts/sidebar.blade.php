@@ -1,4 +1,4 @@
-<div class="flex flex-col w-64 h-screen py-8 bg-gray-800  dark:bg-gray-800 dark:border-gray-600">
+<div class="flex flex-col w-64 h-auto py-8 bg-gray-800  dark:bg-gray-800 dark:border-gray-600">
     {{-- <h2 class="text-3xl font-semibold text-center text-white dark:text-white">LNU</h2> --}}
 
     <div class="flex flex-col items-center mt-6 -mx-2">

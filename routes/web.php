@@ -6,6 +6,7 @@ use App\Http\Controllers\{
     AvailableSlotController,
     CalenderController,
     ChairmanController,
+    ChairmanDashboard,
     CounterController,
     DashboardController,
     DepartmentController,
@@ -49,6 +50,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::group(['prefix' => 'chairman', 'middleware' => ['role:Department_Head']], function () {
+        Route::resource('/dashboard', ChairmanDashboard::class);
         Route::resource('staff', StaffController::class);
         Route::resource('service', ServiceController::class);
         Route::resource('counter', CounterController::class);

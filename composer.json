@@ -13,6 +13,7 @@
         "laravel/nexmo-notification-channel": "^2.5",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
+        "laraveldaily/laravel-charts": "^0.1.26",
         "livewire-ui/modal": "^1.0",
         "livewire/livewire": "^2.5",
         "mckenziearts/laravel-notify": "^2.2",

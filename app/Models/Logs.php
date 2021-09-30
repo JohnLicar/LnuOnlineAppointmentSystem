@@ -16,4 +16,9 @@ class Logs extends Model
         'staff_id',
         'counter_id'
     ];
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
 }

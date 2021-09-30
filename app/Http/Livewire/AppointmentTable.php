@@ -52,6 +52,6 @@ class AppointmentTable extends Component
         event(new ServingDisplay());
         $this->emit('ServingQueued', $appointment, $serving->id, $counter_id);
 
-        // $sendNotificationToFirstFiveQueue->execute(auth()->user()->department_staff->department->description);
+        $sendNotificationToFirstFiveQueue->execute(auth()->user()->department_staff->department->description);
     }
 }
