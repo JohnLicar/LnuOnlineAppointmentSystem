@@ -17,17 +17,17 @@ class DepartmentSeeder extends Seeder
         $departments = [
             [
                 'description' => 'MIS',
-                'code' => 'MIS',
+                // 'code' => 'MIS',
                 'vp_id' => 2,
                 'chairman_id' => 3
             ],
             [
                 'description' => 'Accounting',
-                'code' => 'ACCT',
+                // 'code' => 'ACCT',
             ],
             [
                 'description' => 'Registrar',
-                'code' => 'REG',
+                // 'code' => 'REG',
             ],
         ];
 

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Department;
+use Carbon\Carbon;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -25,5 +26,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Department::preventLazyLoading(!app()->isProduction());
+        Carbon::macro('toFormatedDate', function () {
+            return $this->format('F j, Y  h:i:s A');
+        });
     }
 }

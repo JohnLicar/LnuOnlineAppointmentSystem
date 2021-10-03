@@ -16,10 +16,10 @@
                         @csrf
                         <div class="grid grid-cols-6 gap-6">
 
-                            <div>
+                            {{-- <div>
                                 <x-label for="code" :value="__('Code')" />
                                 <x-input id="code" class="block mt-1 w-full" type="text" name="code" value="{{ $department->code }}" autofocus />
-                            </div>
+                            </div> --}}
 
                             <div class="col-span-5">
                                 <x-label for="description" :value="__('Description')" />

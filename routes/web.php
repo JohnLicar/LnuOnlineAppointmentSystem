@@ -10,6 +10,7 @@ use App\Http\Controllers\{
     CounterController,
     DashboardController,
     DepartmentController,
+    PDFController,
     SaveAppointment,
     ServiceController,
     StaffController,
@@ -37,6 +38,9 @@ Route::post('store', SaveAppointment::class)->name('store');
 Route::get('/available/slots/{appointmentDate}', [AvailableSlotController::class, '__invoke'])->name('available.slot');
 
 Route::group(['middleware' => ['auth']], function () {
+
+    Route::get('pdf/preview', [PDFController::class, 'preview'])->name('pdf.preview');
+    Route::get('pdf/generate', [PDFController::class, 'generatePDF'])->name('pdf.generate');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 

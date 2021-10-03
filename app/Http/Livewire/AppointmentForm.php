@@ -9,10 +9,22 @@ use Livewire\Component;
 
 class AppointmentForm extends Component
 {
+    public $selectedDepartment = '';
+    public $selectedService = '';
+    public $services = [];
+
     public function render()
     {
+        return view(
+            'livewire.appointment-form',
+            [
+                'departments' => Department::all()
+            ],
+        );
+    }
 
-        $departments = Department::all();
-        return view('livewire.appointment-form', compact('departments'));
+    public function updatedSelectedDepartment($department_id)
+    {
+        $this->services = Service::where('department_id', $department_id)->get();
     }
 }

@@ -4,7 +4,7 @@ namespace App\Actions;
 
 use Illuminate\Http\Request;
 use App\Models\Appointment;
-use App\Models\Department;
+use App\Models\Service;
 use App\Notifications\AppointmentNotification;
 use Carbon\Carbon;
 
@@ -12,15 +12,14 @@ class StoreAppointmentAction
 {
     public function execute(Request $request)
     {
-        $transactionCode = Department::select('code')
-            ->where('id', $request->department_id)->first();
+        $transactionCode = Service::select('code')
+            ->where('id', $request->service_id)->first();
 
         $autoTN = Appointment::select('queuing_number')
             ->where('scheduled_date', $request->scheduled_date)
-            ->where('department_id', $request->department_id)
+            ->where('service_id', $request->service_id)
             ->orderBy('id', 'desc')
             ->first();
-
 
         if (!$autoTN || $autoTN === null) {
             $queuingNumber = $transactionCode->code . -1;
@@ -35,6 +34,7 @@ class StoreAppointmentAction
         $validated = $request->validate([
             'queuing_number' => ['required'],
             'department_id' => ['required'],
+            'service_id' => ['required'],
             'scheduled_date' => ['required', 'date', 'min:3'],
             'first_name' => ['required', 'min:2'],
             'middle_name' => ['required', 'min:2'],
@@ -47,8 +47,8 @@ class StoreAppointmentAction
         $date = Carbon::parse($request->appointmentDate)->format('d M Y');
 
         $clientData = [
-            'body' => 'Hello ' . $request->first_name . ' ' . $request->last_name . ' Welcome to MIS Queuing System!
-                Your Queuing Number is ' . $queuingNumber . ' and will be Valid only on ' . $date,
+            'body' => 'Hello <strong>' . $request->first_name . ' ' . $request->last_name . '</strong> Welcome to MIS Queuing System!
+                Your Queuing Number is <strong>' . $queuingNumber . '</strong> and will be Valid only on <strong>' . $date . '</strong>',
             'thankyou' => 'Thank you for using LNU Queuing System',
         ];
 

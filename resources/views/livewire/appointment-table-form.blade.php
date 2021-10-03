@@ -34,7 +34,7 @@
         </div>
         <div>
             <label for="toggleA" class="mr-3 font-semibold">Send to next Department</label>
-            <input wire:click="$toggle('toggleA')" type="checkbox" id="toggleA" class="my-3 "/>
+            <input wire:model="toggleA" type="checkbox" id="toggleA" class="my-3 "/>
 
             @if (!$toggleA )
 
@@ -43,13 +43,21 @@
                 </x-button>
 
             @else
-                <select wire:model.lazy="clientInfo.department_id"  id="department_id" name="department_id" class=" mb-2 w-full rounded-md  focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required autofocus>
+                <select   wire:model.lazy="selectedDepartment" id="department_id" name="department_id" class=" mb-2 w-full rounded-md  focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required autofocus>
                     <option value="" disabled selected>Select Department to Pass</option>
                     @foreach ($departments as $department)
                     <option value="{{ $department->id }}">{{ $department->description }}</option>
                     @endforeach
                 </select>
-                <x-button class="px-10 bg-blue-900" wire:click.prevent="passToNextDepartment({{ $clientInfo->department_id }})" wire:click="$emit('reRender')">
+
+                <select wire:model.lazy="theSelectedServer" id="service_id" name="service_id" class=" mb-2 w-full rounded-md  focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required >
+                    <option value="" disabled selected>Select Department Transaction</option>
+                    @foreach ($services as $service)
+                        <option value="{{ $service->id }}">{{ $service->description }}</option>
+                    @endforeach
+                </select>
+
+                <x-button class="px-10 bg-blue-900" wire:click.prevent="passToNextDepartment({{ $selectedDepartment}}, {{ $theSelectedServer }})" wire:click="$refresh">
                     {{ __('Send to next Dept.') }}
                 </x-button>
             @endif

@@ -12,6 +12,7 @@ class Appointment extends Model
     protected $fillable = [
         'queuing_number',
         'department_id',
+        'service_id',
         'scheduled_date',
         'first_name',
         'middle_name',
@@ -25,6 +26,17 @@ class Appointment extends Model
     public function department()
     {
         return $this->belongsTo(Department::class);
+    }
+    public function service()
+    {
+        return $this->belongsTo(Service::class);
+    }
+
+
+    public static function search($search)
+    {
+        return empty($search) ? static::query()
+            : static::query()->where('service_id', $search);
     }
 
     public function routeNotificationForNexmo($notification)

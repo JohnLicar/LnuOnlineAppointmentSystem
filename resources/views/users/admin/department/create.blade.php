@@ -14,10 +14,10 @@
                     <form method="POST" action="{{  route('department.store') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="grid grid-cols-6 gap-6">
-                            <div>
+                            {{-- <div>
                                 <x-label for="code" :value="__('Department Code')" />
                                 <x-input id="code" class="block mt-1 w-full uppercase" type="text" name="code" placeholder="Code" :value="old('code')" autofocus/>
-                            </div>
+                            </div> --}}
 
                             <div class="col-span-5">
                                 <x-label for="description" :value="__('Description')" />

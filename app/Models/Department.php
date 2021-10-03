@@ -9,7 +9,6 @@ class Department extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'code',
         'description',
         'vp_id',
         'chairman_id'

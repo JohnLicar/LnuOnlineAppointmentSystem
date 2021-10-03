@@ -25,7 +25,7 @@
                                 <x-input id="description" class="block mt-1 w-full" type="text" name="description" placeholder="Description" :value="old('description')"  />
                             </div>
 
-                            <x-input id="department_id"  type="hidden" name="department_id" value="{{ auth()->user()->department_id }}" />
+                            <x-input id="department_id"  type="hidden" name="department_id" value="{{ auth()->user()->chairman->id }}" />
 
                         </div>
                         <div class="flex items-center justify-end mt-4">

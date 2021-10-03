@@ -30,7 +30,7 @@ class NotifyFirstFiveQueued extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['mail', 'nexmo'];
+        return ['mail'];
     }
 
     /**
@@ -61,15 +61,15 @@ class NotifyFirstFiveQueued extends Notification implements ShouldQueue
     }
 
 
-    /**
-     * Get the Nexmo / SMS representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return NexmoMessage
-     */
-    public function toNexmo($notifiable)
-    {
-        return (new NexmoMessage)
-            ->content($this->messageToClient['body']);
-    }
+    // /**
+    //  * Get the Nexmo / SMS representation of the notification.
+    //  *
+    //  * @param  mixed  $notifiable
+    //  * @return NexmoMessage
+    //  */
+    // public function toNexmo($notifiable)
+    // {
+    //     return (new NexmoMessage)
+    //         ->content($this->messageToClient['body']);
+    // }
 }

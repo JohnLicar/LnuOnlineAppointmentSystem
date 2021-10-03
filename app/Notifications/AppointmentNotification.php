@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Messages\NexmoMessage;
 use Illuminate\Notifications\Notification;
-
+use Illuminate\Support\HtmlString;
 
 class AppointmentNotification extends Notification implements ShouldQueue
 {
@@ -31,7 +31,7 @@ class AppointmentNotification extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['mail', 'nexmo'];
+        return ['mail'];
     }
 
     /**
@@ -43,7 +43,7 @@ class AppointmentNotification extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->line($this->clientData['body'])
+            ->line(new HtmlString($this->clientData['body']))
             ->line($this->clientData['thankyou']);
     }
 
@@ -60,15 +60,15 @@ class AppointmentNotification extends Notification implements ShouldQueue
         ];
     }
 
-    /**
-     * Get the Nexmo / SMS representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return NexmoMessage
-     */
-    public function toNexmo($notifiable)
-    {
-        return (new NexmoMessage)
-            ->content($this->clientData['body']);
-    }
+    // /**
+    //  * Get the Nexmo / SMS representation of the notification.
+    //  *
+    //  * @param  mixed  $notifiable
+    //  * @return NexmoMessage
+    //  */
+    // public function toNexmo($notifiable)
+    // {
+    //     return (new NexmoMessage)
+    //         ->content($this->clientData['body']);
+    // }
 }
