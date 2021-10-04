@@ -19,7 +19,6 @@
                     </div>
                     <div class=" w-1/3">
                         <select id="service_id" name="service_id" wire:model="serviceId" class="block w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                            <option disabled selected>Select a Service to Serve</option>
                             <option value="0">All</option>
                             @foreach ($services as $service)
                                 <option value="{{ $service->id }}">
@@ -30,8 +29,8 @@
                     </div>
 
                     <div class=" w-1/3">
-                        <select id="counter_id" name="counter_id" wire:model="counter_id" class="block w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                            <option disabled selected>Select a Counter</option>
+                        <select id="counter_id" name="counter_id" wire:model="counter_id" class="block w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+                            <option value="" disabled>Select a Counter</option>
                             @foreach ($counters as $counter)
                                 <option value="{{ $counter->id }}">
                                     {{ $counter->description }}
@@ -129,7 +128,16 @@
 @push('scripts')
     <script>
     function playSound () {
-        document.getElementById('play').play();
+        var ddl = document.getElementById("counter_id");
+        var selectedValue = ddl.options[ddl.selectedIndex].value;
+        if (selectedValue == "")
+        {
+            alert("Please select a counter");
+        }else{
+            document.getElementById('play').play();
+        }
+
     }
+
     </script>
 @endpush

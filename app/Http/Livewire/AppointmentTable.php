@@ -17,7 +17,7 @@ class AppointmentTable extends Component
 {
     use WithPagination;
     public $counter_id = '';
-    public $serviceId = 0;
+    public $serviceId = '';
 
     protected $listeners = ['echo:update-appointment-display,AppointmentEvent' => 'render'];
 
@@ -44,8 +44,10 @@ class AppointmentTable extends Component
 
     public function callQueue($appointment_id, $counter_id, $next = null, SendNotificationToFirstFiveQueue $sendNotificationToFirstFiveQueue)
     {
+
         $existing = Serving::where('appointment_id', $appointment_id)
             ->orWhere('counter_id', $counter_id)->first();
+
         if ($existing) {
             $this->alert('warning', 'Please Call again because it already served', [
                 'position' => 'top-end',
