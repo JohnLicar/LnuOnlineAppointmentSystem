@@ -23,6 +23,7 @@ class DepartmentSeeder extends Seeder
             ],
             [
                 'description' => 'Accounting',
+                'chairman_id' => 4
                 // 'code' => 'ACCT',
             ],
             [

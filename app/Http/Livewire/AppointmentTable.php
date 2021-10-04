@@ -21,9 +21,6 @@ class AppointmentTable extends Component
 
     protected $listeners = ['echo:update-appointment-display,AppointmentEvent' => 'render'];
 
-
-
-
     public function render()
     {
 
@@ -31,7 +28,7 @@ class AppointmentTable extends Component
         $services = Service::select('id', 'description')->where('department_id', auth()->user()->department_staff->department_id)->get();
 
         $appointments = Appointment::search($this->serviceId)
-            ->with('service')
+            ->with('service', 'department')
             ->where('scheduled_date', Carbon::now()->toDateString())
             ->where('department_id', auth()->user()->department_staff->department_id)
             ->where('serving', false)
