@@ -69,6 +69,7 @@ class VicePresController extends Controller
      */
     public function edit(User $vice_pre)
     {
+
         return view('users.admin.vice-pres.edit', compact('vice_pre'));
     }
 

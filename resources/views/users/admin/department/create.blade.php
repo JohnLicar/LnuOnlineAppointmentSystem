@@ -19,7 +19,7 @@
                                 <x-input id="code" class="block mt-1 w-full uppercase" type="text" name="code" placeholder="Code" :value="old('code')" autofocus/>
                             </div> --}}
 
-                            <div class="col-span-5">
+                            <div class="col-span-3">
                                 <x-label for="description" :value="__('Description')" />
                                 <x-input id="description" class="block mt-1 w-full" type="text" name="description" :value="old('description')" placeholder="Input Department Description" autofocus />
                             </div>
@@ -35,7 +35,8 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-span-3">
+
+                            {{-- <div class="col-span-3">
                                 <x-label for="chairman_id" :value="__('Chairman')" />
                                 <select id="chairman_id" name="chairman_id" :value="old('chairman_id')" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                     <option value="" disabled selected>Select Vice President for this Department</option>
@@ -45,7 +46,7 @@
                                         </option>
                                     @endforeach
                                 </select>
-                            </div>
+                            </div> --}}
                         </div>
 
                         <div class="flex items-center justify-end mt-4">

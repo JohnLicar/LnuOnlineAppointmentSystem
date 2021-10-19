@@ -6,7 +6,7 @@
     <div class="my-5">
         <div class="flex justify-content-between">
            <div>
-              <h4 class="font-semibold">Available Slot: <span id="slot" class="font-bold text-lg  text-indigo-900"></span> </h4>
+              <h4 class="font-semibold">Available Slot: <i id="slot" class="font-bold text-lg  text-indigo-900"></i> </h4>
            </div>
         </div>
      </div>
@@ -28,26 +28,26 @@
                 </select>
             </div>
 
-          @if ($selectedDepartment)
-          <div class="col-span-3 mt-2 transition duration-500 ">
-            <x-label for="service_id" :value="__('Services')" />
-            <select wire:model="selectedService" id="service_id" name="service_id" :value="old('service_id')"
-            class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-            >
-                <option value="" disabled selected>Select your Service you want</option>
-                @foreach ($services as $service)
-                <option value="{{ $service->id }}">{{ $service->description }}</option>
-                @endforeach
 
-            </select>
-        </div>
+            <div class="col-span-3 mt-2 transition duration-500 ">
+                <x-label for="service_id" :value="__('Services')" />
+                <select wire:model="selectedService" id="service_id" name="service_id" :value="old('service_id')"
+                class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                >
+                    <option value="" disabled selected>Select your Service you want</option>
+                    @foreach ($services as $service)
+                    <option value="{{ $service->id }}">{{ $service->description }}</option>
+                    @endforeach
 
-          @endif
+                </select>
+            </div>
+
             <div class="col-span-3 mt-2">
                 <x-label for="scheduled_date" :value="__('Date')" />
-                <x-input id="scheduled" class="block mt-1 w-full" type="text" name="scheduled" :value="old('scheduled')" required  readonly  placeholder="Please click the day in calendar to choose date"/>
-                <x-input id="scheduled_date" type="hidden" name="scheduled_date" :value="old('scheduled_date')" required />
+                <x-input id="scheduled_date" class="block mt-1 w-full" type="text" name="scheduled_date" :value="old('scheduled_date')" required  readonly  placeholder="Please click the day in calendar to choose date"/>
+                {{-- <x-input id="scheduled_date" type="text" name="scheduled_date" /> --}}
             </div>
+
             <div class="mt-2">
                 <x-label for="name" :value="__('First Name')" />
                 <x-input id="first_name" class="block mt-1 w-full" type="text" name="first_name" :value="old('first_name')" required  />
@@ -75,7 +75,7 @@
 
         </div>
         <div class="flex items-center justify-end mt-4">
-            <x-button class="ml-3">
+            <x-button id="submit" class="ml-3">
                 {{ __('Submit Appointment') }}
             </x-button>
         </div>

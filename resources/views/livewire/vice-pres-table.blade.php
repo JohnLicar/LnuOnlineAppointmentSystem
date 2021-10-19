@@ -1,16 +1,17 @@
 <div >
    @if (auth()->user()->isAn('Admin'))
-   <div class="relative flex space-x-4  mb-6">
+   <div class="relative flex space-x-4 mb-6">
         <a href="{{ route('vice-pres.create')}}" class="bg-blue-600 hover:bg-blue-800 transition duration-500 transform hover:scale-105  text-white py-2 px-4 rounded flex">
             <i class="mr-2"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 11C10.2091 11 12 9.20914 12 7C12 4.79086 10.2091 3 8 3C5.79086 3 4 4.79086 4 7C4 9.20914 5.79086 11 8 11ZM8 9C9.10457 9 10 8.10457 10 7C10 5.89543 9.10457 5 8 5C6.89543 5 6 5.89543 6 7C6 8.10457 6.89543 9 8 9Z" fill="currentColor" /><path d="M11 14C11.5523 14 12 14.4477 12 15V21H14V15C14 13.3431 12.6569 12 11 12H5C3.34315 12 2 13.3431 2 15V21H4V15C4 14.4477 4.44772 14 5 14H11Z" fill="currentColor" /><path d="M18 7H20V9H22V11H20V13H18V11H16V9H18V7Z" fill="currentColor" /></svg></i>
             Add Vice President</a>
         <x-input wire:model.debounce.300ms="search" id="search" class="absolute right-0 w-1/3" type="search" name="search" placeholder="Search Voter" :value="old('search')" />
     </div>
+
     <div class="flex justify-around pt-5 border-t-2">
         @forelse ($vicePresidents as $vicePresident)
-        <div class="w-80 bg-white border rounded-lg mt-5 py-2 shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-105 ">
+        <div class="w-80 bg-white border rounded-lg mt-5 shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-105 ">
             {{-- <div class="grid grid-cols-4 gap-4 mb-2 "> --}}
-            <div class="flex items-center ml-5 mb-2 space-x-4">
+            <div class="flex items-center ml-5 mt-2 space-x-4">
                 @if ($vicePresident->avatar)
                     <img class="w-10 h-14 rounded-full" src="{{ asset('images/profile/'.$vicePresident->avatar) }}" alt="Vice President Picture" />
                 @endif
@@ -22,11 +23,15 @@
 
 
             <div class="ml-5">
-                <li>{{ $vicePresident->vice_pres->description ?? 'No department was assigned' }}</li>
+                <div class="grid grid-cols-2 gap-2">
+                    @foreach ( $vicePresident->vice_pres as $viceDepartment)
+                            <li>{{ $viceDepartment->description ?? 'No department was assigned' }}</li>
+                    @endforeach
+                </div>
             </div>
 
             {{-- <img src="https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1052&q=80" alt="" /> --}}
-            <div class="flex justify-around px-10 py-6">
+            <div class="flex justify-around px-10 mt-2">
 
                 <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
                     <a href="{{ route('vice-pres.edit', $vicePresident) }}">

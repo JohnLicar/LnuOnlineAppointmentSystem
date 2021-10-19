@@ -48,7 +48,7 @@
                                 <th class="px-6 py-3 text-left text-sm font-semibold  text-gray-500 uppercase tracking-wider">Queuing Number</th>
                                 <th class="px-6 py-3 text-left text-sm font-semibold  text-gray-500 uppercase tracking-wider">Service</th>
                                 <th class="px-6 py-3 text-left text-sm font-semibold  text-gray-500 uppercase tracking-wider">Full Name</th>
-                                <th class="px-6 py-3 text-left text-sm font-semibold text-gray-500 uppercase tracking-wider">Created At</th>
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-gray-500 uppercase tracking-wider">Status</th>
 
                             </tr>
                         </thead>
@@ -85,7 +85,12 @@
 
 
                                   <td class="px-6 py-4 whitespace-nowrap text-medium text-gray-900">
-                                    {{ $appointment->created_at->toFormatedDate()}}
+                                    {{-- {{ $appointment->created_at->toFormatedDate()}} --}}
+                                    @if ($appointment->waiting)
+                                        <span class="bg-pink-200 text-pink-600 py-1 px-3 rounded-full ">Waiting</span>
+                                    @else
+                                        <span class=" bg-green-200 text-green-600 py-1 px-3 rounded-full ">Queuing</span>
+                                    @endif
                                   </td>
                                 {{-- <td class="py-3 px-6 text-center whitespace-nowrap">
                                     <div class="flex items-right">
@@ -138,6 +143,5 @@
         }
 
     }
-
     </script>
 @endpush

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Appointment;
 use App\Models\Course;
 use App\Models\Department;
 use App\Models\Service;
@@ -12,6 +13,7 @@ class AppointmentForm extends Component
     public $selectedDepartment = '';
     public $selectedService = '';
     public $services = [];
+
 
     public function render()
     {

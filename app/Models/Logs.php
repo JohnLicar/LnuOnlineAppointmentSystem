@@ -14,7 +14,8 @@ class Logs extends Model
         'last_name',
         'department_id',
         'staff_id',
-        'counter_id'
+        'counter_id',
+        'status'
     ];
 
     public function department()

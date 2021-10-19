@@ -34,16 +34,13 @@
                 </div>
             </div>
 
-            <div class="bg-white  my-5 overflow-hidden shadow-sm sm:rounded-lg">
-                <h1 class="text-2xl ml-5">{{ $chart1->options['chart_title'] }}</h1>
-                {!! $chart1->renderHtml() !!}
-
+            <div class="bg-white  mt-5 overflow-hidden shadow-sm sm:rounded-lg" >
+            <div>
+                {!! $chart->container() !!}
+                {{ $chart->script() }}
             </div>
 
         </div>
+        </div>
     </div>
 </x-app-layout>
-
-@push('scripts')
-    {!! $chart1->renderChartJsLibrary() !!}
-    {!! $chart1->renderJs() !!}

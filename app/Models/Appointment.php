@@ -21,6 +21,7 @@ class Appointment extends Model
         'email',
         'contact_number',
         'serving',
+        'waiting'
     ];
 
     public function department()

@@ -16,7 +16,6 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-
         return view('users.admin.department.index');
     }
 
@@ -72,6 +71,7 @@ class DepartmentController extends Controller
         $chairmans = User::with('chairman')->whereRoleIs('Department_Head')
             ->whereNotIn('id', $chairs)
             ->get();
+
         return view('users.admin.department.edit', compact('department', 'vice_presidents', 'chairmans'));
     }
 

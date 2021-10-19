@@ -21,7 +21,7 @@
                                 <x-input id="code" class="block mt-1 w-full" type="text" name="code" value="{{ $department->code }}" autofocus />
                             </div> --}}
 
-                            <div class="col-span-5">
+                            <div class="col-span-3">
                                 <x-label for="description" :value="__('Description')" />
                                 <x-input id="description" class="block mt-1 w-full" type="text" name="description" value="{{ $department->description}}" />
                             </div>
@@ -30,25 +30,9 @@
                                 <x-label for="vp_id" :value="__('Vice President')" />
                                 <select id="vp_id" name="vp_id" :value="old('vice_president')" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                     <option value="" disabled selected>Select Vice President for this Department</option>
-
                                         @foreach ($vice_presidents as $vice_president)
-                                            @if ($vice_president->vice_pres != null)
-                                                <option value="{{ $vice_president->id }}" @if ($vice_president->vice_pres->id ===  $department->id) selected @endif>{{ $vice_president->full_name }}</option>
-                                            @endif
+                                            <option value="{{ $vice_president->id }}" @if ($vice_president->id === $department->vp_id  ) selected @endif>{{ $vice_president->full_name }}</option>
                                         @endforeach
-
-                                </select>
-                            </div>
-                            <div class="col-span-3">
-                                <x-label for="chairman_id" :value="__('Chairman')" />
-                                <select id="chairman_id" name="chairman_id" :value="old('chairman_id')" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                                    <option value="" disabled selected>Select Vice President for this Department</option>
-                                    <option value="">Vacant</option>
-                                    @foreach ($chairmans as $chairman)
-                                        <option value="{{ $chairman->id }}">
-                                            {{ $chairman->full_name }}
-                                        </option>
-                                    @endforeach
                                 </select>
                             </div>
 

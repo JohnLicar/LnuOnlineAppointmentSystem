@@ -10,10 +10,12 @@ use App\Http\Controllers\{
     CounterController,
     DashboardController,
     DepartmentController,
+    MyDepartment,
     PDFController,
     SaveAppointment,
     ServiceController,
     StaffController,
+    ViceDashboard,
     VicePresController
 };
 use Illuminate\Support\Facades\Route;
@@ -50,11 +52,13 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::group(['prefix' => 'vice-pres', 'middleware' => ['role:Vice_President']], function () {
+        Route::get('dashboard', [ViceDashboard::class, 'index'])->name('vice.dashboard.index');
         Route::resource('chairman', ChairmanController::class);
+        Route::resource('my-department', MyDepartment::class);
     });
 
     Route::group(['prefix' => 'chairman', 'middleware' => ['role:Department_Head']], function () {
-        Route::resource('/dashboard', ChairmanDashboard::class);
+        Route::resource('dashboard', ChairmanDashboard::class);
         Route::resource('staff', StaffController::class);
         Route::resource('service', ServiceController::class);
         Route::resource('counter', CounterController::class);

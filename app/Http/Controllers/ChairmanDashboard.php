@@ -2,24 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Charts\ChairmanChart;
 use App\Models\Appointment;
 use App\Models\Logs;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use LaravelDaily\LaravelCharts\Classes\LaravelChart;
 
 class ChairmanDashboard extends Controller
 {
-
-
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(ChairmanChart $chart)
     {
-
         if (auth()->user()->chairman) {
 
             $appointmentToday = Appointment::where('department_id', auth()->user()->chairman->id)
@@ -30,24 +27,7 @@ class ChairmanDashboard extends Controller
                 ->whereDate('created_at', Carbon::today())
                 ->count();
         }
-
-        $chart_options = [
-            'chart_title' => 'Appointment by dates',
-            'report_type' => 'group_by_date',
-            'model' => 'App\Models\Logs',
-            'conditions'            => [
-                ['name' => 'Appointment made in last 7 days', 'condition' => 'department_id = ' . auth()->user()->chairman->id, 'color' => 'blue', 'fill' => true],
-            ],
-            'group_by_field' => 'created_at',
-            'group_by_period' => 'day',
-            'aggregate_function' => 'count',
-            'filter_period' => 'week',
-            'chart_type' => 'line',
-        ];
-
-        $chart1 = new LaravelChart($chart_options);
-        // dd($chart1);
-        return view('users.chairman.dashboard', compact('chart1', 'appointmentToday', 'completedToday'));
+        return view('users.chairman.dashboard', compact('appointmentToday', 'completedToday'), ['chart' => $chart->build()]);
     }
 
     /**

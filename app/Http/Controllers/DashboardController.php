@@ -15,7 +15,8 @@ class DashboardController extends Controller
     {
         if (auth()->user()->isAn('Admin')) return view('users.admin.dashboard');
 
-        if (auth()->user()->isAn('Vice_President')) return view('users.vice-pres.dashboard');
+        // if (auth()->user()->isAn('Vice_President')) return view('users.vice-pres.dashboard');
+        if (auth()->user()->isAn('Vice_President')) return redirect()->route('vice.dashboard.index');
 
         if (auth()->user()->isAn('Department_Head')) return redirect()->route('dashboard.index');
 

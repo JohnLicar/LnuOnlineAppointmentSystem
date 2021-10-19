@@ -18,4 +18,9 @@ class Department extends Component
         // dd($departments);
         return view('livewire.department', compact('departments'));
     }
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
 }

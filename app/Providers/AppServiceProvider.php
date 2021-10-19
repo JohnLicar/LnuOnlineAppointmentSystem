@@ -26,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Department::preventLazyLoading(!app()->isProduction());
+
         Carbon::macro('toFormatedDate', function () {
             return $this->format('F j, Y  h:i:s A');
         });

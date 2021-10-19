@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Actions\LogsAction;
+use App\Events\AppointmentEvent;
 use App\Models\Appointment;
 use App\Models\Department;
 use App\Models\Service;
@@ -31,7 +32,7 @@ class AppointmentTableForm extends Component
     ];
 
     protected $listeners = [
-        'ServingQueued', 'reRender' => 'render',
+        'ServingQueued',
     ];
 
     public function render()
@@ -42,6 +43,7 @@ class AppointmentTableForm extends Component
 
     public function ServingQueued(Appointment $appointment, $serving, $counter_id)
     {
+        session()->push('serving', $appointment);
         $this->clientInfo =  $appointment;
         $this->servingID = $serving;
         $this->counter_id = $counter_id;
@@ -54,7 +56,7 @@ class AppointmentTableForm extends Component
 
     public function passToNextDepartment($department_id, $service_id, LogsAction $logsAction)
     {
-        $logsAction->execute($this->clientInfo, $this->counter_id);
+        $logsAction->execute($this->clientInfo, $this->counter_id, true);
 
         $this->clientInfo->update([
             'serving' => '0',
@@ -63,7 +65,7 @@ class AppointmentTableForm extends Component
         ]);
         Serving::where('id', $this->servingID)->delete();
         $this->clearData();
-
+        session()->forget('serving');
         $this->alert('success', 'Client Successfully Passed to next Department', [
             'position' => 'top-end',
             'timer' => 3000,
@@ -75,11 +77,11 @@ class AppointmentTableForm extends Component
 
     public function doneAppointment(LogsAction $logsAction)
     {
-        $logsAction->execute($this->clientInfo, $this->counter_id);
-
+        $logsAction->execute($this->clientInfo, $this->counter_id, true);
         Appointment::where('id', $this->clientInfo->id)
             ->delete();
         $this->clearData();
+        session()->forget('serving');
         $this->alert('success', 'Client Successfully Passed to next Department', [
             'position' => 'top-end',
             'timer' => 3000,
@@ -87,6 +89,39 @@ class AppointmentTableForm extends Component
             'showCancelButton' => false,
             'showConfirmButton' => false
         ]);
+    }
+
+    public function failTransaction(LogsAction $logsAction)
+    {
+        // $logsAction->execute($this->clientInfo, $this->counter_id, false);
+        // Appointment::where('id', $this->clientInfo->id)
+        //     ->delete();
+        // $this->clearData();
+        // session()->forget('serving');
+        // $this->alert('danger', 'Client Transaction nulled', [
+        //     'position' => 'top-end',
+        //     'timer' => 3000,
+        //     'toast' => true,
+        //     'showCancelButton' => false,
+        //     'showConfirmButton' => false
+        // ]);
+
+        $this->clientInfo->update([
+            'serving' => '0',
+            'waiting' => '1'
+        ]);
+        Serving::where('id', $this->servingID)->delete();
+        session()->forget('serving');
+        $this->clearData();
+
+        $this->alert('info', 'Client Successfully set to waiting list', [
+            'position' => 'top-end',
+            'timer' => 3000,
+            'toast' => true,
+            'showCancelButton' => false,
+            'showConfirmButton' => false
+        ]);
+        event(new AppointmentEvent());
     }
 
     public function clearData()

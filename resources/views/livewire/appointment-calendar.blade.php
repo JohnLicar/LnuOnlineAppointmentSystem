@@ -94,6 +94,20 @@
                     this.currentMonth = today.getMonth();
 					this.year = today.getFullYear();
 					this.datepickerValue = new Date(this.year, this.month, today.getDate()).toDateString();
+                    this.event_dateToDb = new Date(this.year, this.month, today.getDate()).toLocaleString('fr-CA', { year: 'numeric', month: '2-digit', day: '2-digit' });
+
+                    $.ajax({
+                        type: "GET",
+                        url: `available/slots/${this.event_dateToDb}`,
+                        success: function(result){
+                            $('#slot').text(result);
+                            if(result > 100){
+                                console.log(result);
+                            }else{
+                                console.log('sadfasd');
+                            }
+                        }
+                    });
 
 				},
 
@@ -113,10 +127,7 @@
 				},
 
 				showEventModal(date) {
-
                     this.event_dateToDb = new Date(this.year, this.month, date).toLocaleString('fr-CA', { year: 'numeric', month: '2-digit', day: '2-digit' });
-					this.event_date = new Date(this.year, this.month, date).toDateString();
-                    document.getElementById("scheduled").value = this.event_date
                     document.getElementById("scheduled_date").value = this.event_dateToDb
 
                     $.ajax({
@@ -124,7 +135,11 @@
                         url: `available/slots/${this.event_dateToDb}`,
                         success: function(result){
                             $('#slot').text(result);
-                            console.log(result);
+                            if(result <= 0){
+                                $(":submit").prop( "disabled", true );
+                            }else{
+                                $(":submit").prop( "disabled", false );
+                            }
                         }
                     });
 
@@ -147,7 +162,7 @@
 
 					this.blankdays = blankdaysArray;
 					this.no_of_days = daysArray;
-				}
+				},
 			}
 		}
 	</script>

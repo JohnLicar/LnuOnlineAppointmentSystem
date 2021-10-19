@@ -24,6 +24,11 @@ class Department extends Model
         return $this->belongsTo(User::class, 'chairman_id');
     }
 
+    public function staff()
+    {
+        return $this->hasMany(Staff::class);
+    }
+
     public static function search($search)
     {
         return empty($search) ? static::query()

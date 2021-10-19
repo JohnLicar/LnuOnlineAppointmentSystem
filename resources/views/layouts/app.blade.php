@@ -12,6 +12,9 @@
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
+    <!-- Charts -->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
@@ -35,7 +38,6 @@
                 <!-- Page Content -->
                 <main>
                     {{ $slot }}
-                    @livewire('livewire-ui-modal')
                 </main>
             </div>
         </div>

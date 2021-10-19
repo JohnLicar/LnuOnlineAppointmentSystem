@@ -17,6 +17,7 @@ class SaveAppointment extends Controller
      */
     public function __invoke(Request $request, StoreAppointmentAction $storeAppointmentAction)
     {
+
         $appointment = $storeAppointmentAction->execute($request);
         return redirect()->route('welcome')->with('message', 'Appointment Success! Your Queuing Number is ' . $appointment->queuing_number);
     }

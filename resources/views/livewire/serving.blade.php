@@ -21,11 +21,8 @@
 
                                 <td class="py-3 px-6 text-center border-r-4 border-blue-800 ">
                                     <div class="text-4xl text-md">
-
-                                      <span class="font-bold">{{ $counter->serving->appointment->queuing_number ?? 'Break'}}</span>
-
+                                      <span class="font-bold">{{ $counter->appointment->queuing_number ?? 'Break'}}</span>
                                     </div>
-
                                 </td>
                             </tr>
                           @endforeach

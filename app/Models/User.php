@@ -51,7 +51,7 @@ class User extends Authenticatable
 
     public function vice_pres()
     {
-        return $this->hasOne(Department::class, 'vp_id');
+        return $this->hasMany(Department::class, 'vp_id');
     }
     public function chairman()
     {
