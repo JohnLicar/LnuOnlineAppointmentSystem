@@ -46,14 +46,16 @@
             <input wire:model="toggleA" type="checkbox" id="toggleA" class="my-3 "/>
 
             @if (!$toggleA )
+                @if (session()->has('serving'))
+                    <x-button class="px-10" wire:click.prevent="doneAppointment()">
+                        {{ __('Done Transaction') }}
+                    </x-button>
 
-                <x-button class="px-10" wire:click.prevent="doneAppointment()">
-                    {{ __('Done Transaction') }}
-                </x-button>
-                <x-back-button  class="px-10 mt-3" wire:click.prevent="failTransaction()">
-                    {{ __('Wait') }}
-                </x-back-button>
 
+                    <x-back-button  class="px-10 mt-3 w-full flex justify-center text-center" wire:click.prevent="failTransaction()">
+                        {{ __('Wait') }}
+                    </x-back-button>
+                @endif
             @else
                 <select   wire:model.lazy="selectedDepartment" id="department_id" name="department_id" class=" mb-2 w-full rounded-md  focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required autofocus>
                     <option value="" disabled selected>Select Department to Pass</option>

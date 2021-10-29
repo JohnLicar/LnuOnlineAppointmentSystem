@@ -13,7 +13,7 @@ class Serving extends Component
     public $call;
 
     // protected $listeners = ['update-display' => 'render'];
-    protected $listeners = ['echo:update-display, ServingDisplay' => 'render'];
+    protected $listeners = ['echo:update-display,ServingDisplay' => 'render'];
 
     public function render()
     {

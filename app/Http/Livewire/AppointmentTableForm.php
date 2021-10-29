@@ -32,7 +32,7 @@ class AppointmentTableForm extends Component
     ];
 
     protected $listeners = [
-        'ServingQueued',
+        'ServingQueued', 'reRender' => 'render',
     ];
 
     public function render()
@@ -73,6 +73,7 @@ class AppointmentTableForm extends Component
             'showCancelButton' => false,
             'showConfirmButton' => false
         ]);
+        event(new AppointmentEvent());
     }
 
     public function doneAppointment(LogsAction $logsAction)
@@ -82,6 +83,7 @@ class AppointmentTableForm extends Component
             ->delete();
         $this->clearData();
         session()->forget('serving');
+        session()->forget('waiting');
         $this->alert('success', 'Client Successfully Passed to next Department', [
             'position' => 'top-end',
             'timer' => 3000,
@@ -112,6 +114,7 @@ class AppointmentTableForm extends Component
         ]);
         Serving::where('id', $this->servingID)->delete();
         session()->forget('serving');
+        session()->push('waiting', $this->clientInfo);
         $this->clearData();
 
         $this->alert('info', 'Client Successfully set to waiting list', [
